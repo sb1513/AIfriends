@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 
 import SideBar from "@/components/sidebar/SideBar.vue";
 </script>

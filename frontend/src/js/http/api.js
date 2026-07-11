@@ -68,7 +68,7 @@ api.interceptors.response.use(
                 if (!isRefreshing) {
                     isRefreshing = true
                     axios.post(
-                        `${BASE_URL}/api/user/account/refresh_token/`,
+                        `${BASE_URL}/api/user/accounts/refresh_token/`,
                         {},
                         {withCredentials: true, timeout: 5000}
                     ).then(res => {

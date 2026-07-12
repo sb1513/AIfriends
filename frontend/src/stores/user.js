@@ -19,7 +19,7 @@ export const useUserStore = defineStore('user', ()=>{
 
     function setUserInfo(data){
         id.value = data.user_id
-        username.value = data.user_name
+        username.value = data.username
         photo.value = data.photo
         profile.value = data.profile
     }

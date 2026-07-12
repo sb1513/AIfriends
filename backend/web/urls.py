@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, re_path
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -18,5 +18,7 @@ urlpatterns = [
     path('api/user/accounts/register/',RegisterView.as_view()),
     path("api/user/accounts/refresh_token/",RefreshTokenView.as_view()),
     path("api/user/accounts/get_user_info/",GetUserInfoView.as_view()),
-    path('', index)
+    path('', index),
+
+    re_path(r'^(?!media/|static/|assets/).*$', index),
 ]

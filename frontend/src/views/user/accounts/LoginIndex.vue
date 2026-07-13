@@ -34,10 +34,8 @@ async function handleLogin(){
         errorMessage.value = data.result
       }
     } catch (err){
-      console.log(err)
     }
   }
-  console.log('登录')
 }
 </script>
 

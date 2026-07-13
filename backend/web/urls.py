@@ -7,6 +7,7 @@ from rest_framework_simplejwt.views import (
 from web.views.create.character.create import CreateCharacterView
 from web.views.create.character.get_single import GetSingleCharacterView
 from web.views.create.character.remove import RemoveCharacterView
+from web.views.create.character.update import UpdateCharacterView
 from web.views.index import index
 from web.views.user.accounts import get_user_info
 from web.views.user.accounts.get_user_info import GetUserInfoView
@@ -24,7 +25,7 @@ urlpatterns = [
     path("api/user/accounts/get_user_info/",GetUserInfoView.as_view()),
     path("api/user/profiles/update/",UpdateProfileView.as_view()),
     path("api/create/character/create/",CreateCharacterView.as_view()),
-    path("api/create/character/update/",UpdateProfileView.as_view()),
+    path("api/create/character/update/",UpdateCharacterView.as_view()),
     path("api/create/character/remove/",RemoveCharacterView.as_view()),
     path("api/create/character/get_single/",GetSingleCharacterView.as_view()),
     path('', index),

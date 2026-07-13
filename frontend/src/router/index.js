@@ -8,6 +8,7 @@ import RegisterIndex from "@/views/user/accounts/RegisterIndex.vue";
 import SpaceIndex from "@/views/user/space/SpaceIndex.vue";
 import ProfileIndex from "@/views/user/profile/ProfileIndex.vue";
 import {useUserStore} from "@/stores/user.js";
+import UpdateCharcter from "@/views/creates/character/UpdateCharcter.vue";
 
 
 const router = createRouter({
@@ -33,6 +34,14 @@ const router = createRouter({
       path: '/create/',
       component: CreatesIndex,
       name: 'creates-index',
+      meta:{
+        needLogin: true,
+      },
+    },
+    {
+      path: '/create/character/update/:character_id/',
+      component: UpdateCharcter,
+      name: 'update-character',
       meta:{
         needLogin: true,
       },

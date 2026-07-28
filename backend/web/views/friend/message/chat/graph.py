@@ -14,13 +14,19 @@ class ChatGraph:
             model='deepseek-v4-pro',
             openai_api_key=os.getenv('API_KEY'),
             openai_api_base=os.getenv('API_BASE'),
+            streaming=True,  # 流式输出
+            model_kwargs={
+                "stream_options": {
+                    "include_usage": True,  # 输出token消耗数量
+                }
+            },
         )
 
         class AgentState(TypedDict):
             messages: Annotated[Sequence[BaseMessage], add_messages]
 
         def model_call(state: AgentState) -> AgentState:
-            res = llm.invoke(state=['messages'])
+            res = llm.invoke(state['messages'])
             return {'messages': [res]}
 
         graph = StateGraph(AgentState)

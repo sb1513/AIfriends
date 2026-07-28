@@ -20,3 +20,5 @@ env/
 
 # Static files
 staticfiles/
+
+*.env

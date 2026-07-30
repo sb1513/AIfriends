@@ -22,3 +22,4 @@ env/
 staticfiles/
 
 *.env
+backend/web/documents/

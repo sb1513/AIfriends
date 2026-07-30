@@ -26,8 +26,6 @@ async function handleSend(event, audio_msg){
   }
   if(!content) return
 
-  if (isProcessing) retrun
-
   const curId = ++ processId
   message.value = ''
 

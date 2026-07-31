@@ -49,8 +49,8 @@ class ASRView(APIView):
             event = data['header']['event']
             if event == 'result-generated':
                 output = data['payload']['output']
-                if output.get('sentence', None) and output['sentence']['sentence_end']:
-                    text += output['sentence']['text']
+                if output.get('transcription', None) and output['transcription']['sentence_end']:
+                    text += output['transcription']['text']
             elif event in ['task-finished', 'task-failed']:
                 break
         return text
@@ -59,32 +59,28 @@ class ASRView(APIView):
     async def run_asr_task(self, pcm_data):
         task_id = uuid.uuid4().hex
         api_key = os.getenv('API_KEY')
-        wss_asr_url = os.getenv('WSS_ASR_URL')
+        wss_url = os.getenv('WSS_URL')
         headers = {
             'Authorization': f"Bearer {api_key}"
         }
-        async with websockets.connect(wss_asr_url, additional_headers=headers) as ws:
+        async with websockets.connect(wss_url, additional_headers=headers) as ws:
             await ws.send(json.dumps({
                 "header": {
-                "action": "run-task",
-                "task_id": task_id,
-                "streaming": "duplex"
+                    "streaming": "duplex",
+                    "task_id": task_id,
+                    "action": "run-task"
                 },
                 "payload": {
-                    "task_group": "audio",
-                    "task": "asr",
-                    "function": "recognition",
-                    "model": "paraformer-realtime-v2",
+                    "model": "gummy-realtime-v1",
                     "parameters": {
-                        "format": "pcm",
                         "sample_rate": 16000,
-                        "disfluency_removal_enabled": False,
-                        "language_hints": [
-                            
-                        ],
-                        "semantic_punctuation_enabled": True,
+                        "format": "pcm",
+                        "transcription_enabled": True,
                     },
-                    "input": {}
+                    "input": {},
+                    "task": "asr",
+                    "task_group": "audio",
+                    "function": "recognition"
                 }
             }))
             async for msg in ws:

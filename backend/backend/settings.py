@@ -34,7 +34,7 @@ SECRET_KEY = 'django-insecure-m#asevsvmb!ka$qe5b!9d!d1kt6(kfths945_okdu)+719wyu(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'www.yuhentai.xyz']
+ALLOWED_HOSTS = ['127.0.0.1', 'app8117.acapp.acwing.com.cn']
 
 
 # Application definition
@@ -140,7 +140,7 @@ else:
 if DEBUG:
     MEDIA_URL = 'http://127.0.0.1:8000/media/'
 else:
-    MEDIA_URL = 'www.yuhentai.xyz/media/'
+    MEDIA_URL = 'https://app8117.acapp.acwing.com.cn/media/'
 
 MEDIA_ROOT = BASE_DIR / 'media'
 

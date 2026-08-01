@@ -1,4 +1,4 @@
-const platform = 'django'  //有三种模式:vue,django,cloud
+const platform = 'vue'  //有三种模式:vue,django,cloud
 
 const CONFIG_API = {
     HTTP_URL: '',

@@ -124,7 +124,7 @@ class MessageChatView(APIView):
                     break
 
 
-    async def run_tts_tasks(self, app, inputs, mq):
+    async def run_tts_tasks(self, app, inputs, mq, voice_id):
         task_id = uuid.uuid4().hex
         api_key = os.getenv('API_KEY')
         wss_url = os.getenv('WSS_URL')
@@ -135,25 +135,25 @@ class MessageChatView(APIView):
             await ws.send(json.dumps({
                 "header": {
                     "action": "run-task",
-                    "task_id": task_id,
+                    "task_id": task_id,  # 随机uuid
                     "streaming": "duplex"
                 },
                 "payload": {
                     "task_group": "audio",
                     "task": "tts",
                     "function": "SpeechSynthesizer",
-                    "model": "qwen-audio-3.0-tts-flash",
+                    "model": "cosyvoice-v3-flash",
                     "parameters": {
                         "text_type": "PlainText",
-                        "voice": "longanlingxi",
-                        "format": "mp3",
-                        "sample_rate": 22050,
-                        "volume": 50,
-                        "rate": 1.25,
-                        "pitch": 1.0,
-                        "enable_ssml": False
+                        "voice": voice_id,  # 音色
+                        "format": "mp3",  # 音频格式
+                        "sample_rate": 22050,  # 采样率
+                        "volume": 50,  # 音量
+                        "rate": 1.25,  # 语速
+                        "pitch": 1  # 音调
                     },
-                    "input": {}
+                    "input": {  # input不能省去，不然会报错
+                    }
                 }
             }))
             async for msg in ws:
@@ -165,16 +165,16 @@ class MessageChatView(APIView):
             )
 
 
-    def work(self, app, inputs, mq):
+    def work(self, app, inputs, mq, voice_id):
         try:
-            asyncio.run(self.run_tts_tasks(app, inputs, mq))
+            asyncio.run(self.run_tts_tasks(app, inputs, mq, voice_id))
         finally:
             mq.put_nowait(None)
 
 
     def event_stream(self, app, inputs, friend, message):
         mq = Queue()
-        thread = threading.Thread(target=self.work, args=(app, inputs, mq))
+        thread = threading.Thread(target=self.work, args=(app, inputs, mq, friend.character.voice.voice_id))
         thread.start()
 
         full_output = ''
